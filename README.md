@@ -46,7 +46,7 @@ This will start the React development server, and you can open the application i
 
 Here's what the frontend of the Lottery application looks like:
 
-![Lottery Frontend](https://i.imgur.com/hhy7HHV.png)
+![Lottery Frontend](https://i.imgur.com/aq35ZUA.png)
 
 ## Show your support
 Give a ⭐ if this project helped you!
