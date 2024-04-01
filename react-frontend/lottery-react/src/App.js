@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import web3 from './web3';
 import lottery from './lottery';
+import Layout from './components/Layout/Layout';
+import ParticipateForm from './components/ParticipateForm/ParticipateForm';
+import WinnerPicker from './components/WinnerPicker/WinnerPicker';
+import MessageBar from './components/MessageBar/MessageBar';
 
 function App() {
   
@@ -45,7 +50,7 @@ function App() {
   async function handleClick() {
     const accounts = await web3.eth.getAccounts();
 
-    setMessage("Waiting on transaction success");
+    setMessage("Waiting on transaction success ...");
 
     await lottery.methods.pickWinner().send({
       from: accounts[0],
@@ -56,37 +61,14 @@ function App() {
 
   return (
     <div className="App">
-      <h2>Lottery Contract</h2>
-      <p>
-        This contract is managed by {manager}. There are currently {" "} {players.length} people entered, competing to win {" "} {web3.utils.fromWei(balance, "ether")} ether!
-      </p>
-
-      <hr/>
-
-      <form onSubmit={handleSubmit}>
-        <h4>Want to try your luck?</h4>
-        <div>
-          <label>Amount of ether to enter</label>
-          <input
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-          />
-        </div>
-        <button>Enter</button>
-      </form>
-
-      <hr/>
-
-      <h4>Ready to pick a winner?</h4>
-      <button
-        onClick={handleClick}
-      >
-        Pick a winner!
-      </button>
-
-      <hr/>
-
-      <h1>{message}</h1>
+      <Layout>
+        <p>
+          This contract is managed by {manager}. There are currently {" "} {players.length} people entered, competing to win {" "} {web3.utils.fromWei(balance, "ether")} ether!
+        </p>
+        <ParticipateForm handleSubmit={handleSubmit} value={value} setValue={setValue} />
+        <WinnerPicker handleClick={handleClick} />
+        <MessageBar message={message} />
+      </Layout>
     </div>
   );
 }
